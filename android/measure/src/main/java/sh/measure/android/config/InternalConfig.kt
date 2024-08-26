@@ -45,11 +45,6 @@ internal interface InternalConfig {
     val maxUserDefinedAttributeValueLength: Int
 
     /**
-     * Whether user defined attribute keys can have spaces or not. Defaults to `false`.
-     */
-    val userDefinedAttributeKeyWithSpaces: Boolean
-
-    /**
      * The color of the mask to apply to the screenshot. The value should be a hex color string.
      * For example, "#222222".
      */
