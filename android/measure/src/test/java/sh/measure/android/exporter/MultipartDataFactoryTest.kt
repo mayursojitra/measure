@@ -25,7 +25,7 @@ class MultipartDataFactoryTest {
     @Test
     fun `createFromEventPacket with serializedData returns FormField`() {
         fun EventPacket.expectedSerializedValue(): String {
-            return "{\"id\":\"$eventId\",\"session_id\":\"$sessionId\",\"user_triggered\":$userTriggered,\"timestamp\":\"$timestamp\",\"type\":\"$type\",\"$type\":$serializedData,\"attachments\":$serializedAttachments,\"attribute\":$serializedAttributes}"
+            return "{\"id\":\"$eventId\",\"session_id\":\"$sessionId\",\"user_triggered\":$userTriggered,\"timestamp\":\"$timestamp\",\"type\":\"$type\",\"$type\":$serializedData,\"attachments\":$serializedAttachments,\"attribute\":$serializedAttributes,\"user_defined_attribute\":$serializedUserDefinedAttributes}"
         }
 
         // Given
@@ -46,7 +46,7 @@ class MultipartDataFactoryTest {
     @Test
     fun `createFromEventPacket with filePath returns FormField`() {
         fun EventPacket.expectedSerializedValue(): String {
-            return "{\"id\":\"$eventId\",\"session_id\":\"$sessionId\",\"user_triggered\":$userTriggered,\"timestamp\":\"$timestamp\",\"type\":\"$type\",\"$type\":${getFakeFileContent()},\"attachments\":$serializedAttachments,\"attribute\":$serializedAttributes}"
+            return "{\"id\":\"$eventId\",\"session_id\":\"$sessionId\",\"user_triggered\":$userTriggered,\"timestamp\":\"$timestamp\",\"type\":\"$type\",\"$type\":${getFakeFileContent()},\"attachments\":$serializedAttachments,\"attribute\":$serializedAttributes,\"user_defined_attributes\":$serializedUserDefinedAttributes}"
         }
         val eventEntity = TestData.getEventEntity(
             eventId = "event-id",

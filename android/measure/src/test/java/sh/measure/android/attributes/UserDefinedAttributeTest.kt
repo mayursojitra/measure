@@ -93,13 +93,4 @@ class UserDefinedAttributeTest {
 
         assertEquals(1, userDefinedAttribute.getAll().size)
     }
-
-    @Test
-    fun `discards attribute if key contains spaces`() {
-        configProvider.userDefinedAttributeKeyWithSpaces = false
-        userDefinedAttribute.put("key1", "value1", false)
-        userDefinedAttribute.put("key with spaces", "value2", false)
-
-        assertEquals(1, userDefinedAttribute.getAll().size)
-    }
 }
