@@ -37,4 +37,5 @@ internal data class Config(
         EventType.WARM_LAUNCH,
     )
     override val maxEventsInDatabase: Int = 50_000
+    override val maxUserDefinedAttributesInEvent: Int = 100
 }

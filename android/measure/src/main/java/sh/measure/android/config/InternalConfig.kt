@@ -45,6 +45,11 @@ internal interface InternalConfig {
     val maxUserDefinedAttributeValueLength: Int
 
     /**
+     * The maximum number of user defined attributes allowed in an event.
+     */
+    val maxUserDefinedAttributesInEvent: Int
+
+    /**
      * The color of the mask to apply to the screenshot. The value should be a hex color string.
      * For example, "#222222".
      */

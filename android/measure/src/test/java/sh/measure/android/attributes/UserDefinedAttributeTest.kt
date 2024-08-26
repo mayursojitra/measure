@@ -35,7 +35,7 @@ class UserDefinedAttributeTest {
         userDefinedAttribute.put("key2", "value2", true)
         userDefinedAttribute.put("key3", "value3", false)
 
-        assertEquals(2, database.getUserDefinedAttributes().size)
+        assertEquals(2, database.getUserDefinedAttributes(100).size)
         assertEquals(3, userDefinedAttribute.getAll().size)
     }
 
@@ -47,7 +47,7 @@ class UserDefinedAttributeTest {
         val attributes = userDefinedAttribute.getAll()
         assertEquals(1, attributes.size)
         assertEquals("value1.1", attributes["key1"])
-        assertEquals("value1.1", database.getUserDefinedAttributes()["key1"])
+        assertEquals("value1.1", database.getUserDefinedAttributes(100)["key1"])
     }
 
     @Test
@@ -56,11 +56,11 @@ class UserDefinedAttributeTest {
         userDefinedAttribute.put("key2", "value2", true)
         userDefinedAttribute.put("key3", "value3", false)
         assertEquals(3, userDefinedAttribute.getAll().size)
-        assertEquals(2, database.getUserDefinedAttributes().size)
+        assertEquals(2, database.getUserDefinedAttributes(100).size)
 
         userDefinedAttribute.clear()
         assertEquals(0, userDefinedAttribute.getAll().size)
-        assertEquals(0, database.getUserDefinedAttributes().size)
+        assertEquals(0, database.getUserDefinedAttributes(100).size)
     }
 
     @Test
@@ -69,11 +69,11 @@ class UserDefinedAttributeTest {
         userDefinedAttribute.put("key2", "value2", true)
         userDefinedAttribute.put("key3", "value3", false)
         assertEquals(3, userDefinedAttribute.getAll().size)
-        assertEquals(2, database.getUserDefinedAttributes().size)
+        assertEquals(2, database.getUserDefinedAttributes(100).size)
 
         userDefinedAttribute.remove("key1")
         assertEquals(2, userDefinedAttribute.getAll().size)
-        assertEquals(1, database.getUserDefinedAttributes().size)
+        assertEquals(1, database.getUserDefinedAttributes(100).size)
     }
 
     @Test

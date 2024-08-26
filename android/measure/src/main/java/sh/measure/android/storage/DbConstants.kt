@@ -272,13 +272,14 @@ internal object Sql {
         """.trimIndent()
     }
 
-    fun getUserDefinedAttributes(): String {
+    fun getUserDefinedAttributes(limit: Int): String {
         return """
             SELECT 
                 ${UserDefinedAttributesTable.COL_KEY}, 
                 ${UserDefinedAttributesTable.COL_VALUE}, 
                 ${UserDefinedAttributesTable.COL_TYPE}
             FROM ${UserDefinedAttributesTable.TABLE_NAME}
+            LIMIT $limit
         """.trimIndent()
     }
 

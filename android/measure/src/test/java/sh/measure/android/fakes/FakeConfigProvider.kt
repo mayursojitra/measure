@@ -30,6 +30,7 @@ internal class FakeConfigProvider : ConfigProvider {
     override var sessionEndThresholdMs: Long = 60 * 1000 // 1 minute
     override var maxUserDefinedAttributeKeyLength: Int = 256
     override var maxUserDefinedAttributeValueLength: Int = 256
+    override val maxUserDefinedAttributesInEvent: Int = 100
 
     var shouldTrackHttpBody = false
     override fun shouldTrackHttpBody(url: String, contentType: String?): Boolean {

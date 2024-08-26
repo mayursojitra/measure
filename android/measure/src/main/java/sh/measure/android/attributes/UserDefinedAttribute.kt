@@ -11,11 +11,49 @@ import java.util.concurrent.RejectedExecutionException
 import java.util.concurrent.atomic.AtomicBoolean
 
 internal interface UserDefinedAttribute {
+    /**
+     * Insert a number attribute with the given key. Updates the attribute if it already exists.
+     *
+     * @param key The key of the attribute.
+     * @param value The value of the attribute.
+     * @param store Whether to store the attribute in the database.
+     */
     fun put(key: String, value: Number, store: Boolean)
+
+    /**
+     * Insert a string attribute with the given key. Updates the attribute if it already exists.
+     *
+     * @param key The key of the attribute.
+     * @param value The value of the attribute.
+     * @param store Whether to store the attribute in the database.
+     */
     fun put(key: String, value: String, store: Boolean)
+
+    /**
+     * Insert a boolean attribute with the given key. Updates the attribute if it already exists.
+     *
+     * @param key The key of the attribute.
+     * @param value The value of the attribute.
+     * @param store Whether to store the attribute in the database.
+     */
     fun put(key: String, value: Boolean, store: Boolean)
+
+    /**
+     * Get all user defined attributes. With a limit
+     * of [ConfigProvider.maxUserDefinedAttributesInEvent].
+     */
     fun getAll(): Map<String, Any?>
+
+    /**
+     * Remove the attribute with the given key. No-op if the attribute does not exist.
+     *
+     * @param key The key of the attribute to remove.
+     */
     fun remove(key: String)
+
+    /**
+     * Clear all user defined attributes.
+     */
     fun clear()
 }
 
@@ -73,7 +111,8 @@ internal class UserDefinedAttributeImpl(
 
     override fun getAll(): Map<String, Any?> {
         if (loadedFromDisk.getAndSet(true)) {
-            val persistedAttributes = database.getUserDefinedAttributes()
+            val persistedAttributes =
+                database.getUserDefinedAttributes(limit = configProvider.maxUserDefinedAttributesInEvent)
             attributes.putAll(persistedAttributes)
         }
         return attributes.toMap()
@@ -91,7 +130,11 @@ internal class UserDefinedAttributeImpl(
                 "Unable to remove attribute: $key, as it does not exist",
             )
         } catch (e: RejectedExecutionException) {
-            logger.log(LogLevel.Error, "Failed to submit remove user defined attribute task to executor", e)
+            logger.log(
+                LogLevel.Error,
+                "Failed to submit remove user defined attribute task to executor",
+                e
+            )
         }
     }
 

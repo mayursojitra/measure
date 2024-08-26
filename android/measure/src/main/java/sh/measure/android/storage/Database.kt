@@ -123,8 +123,10 @@ internal interface Database : Closeable {
 
     /**
      * Returns all the user defined attributes stored in the database.
+     *
+     * @param limit The maximum number of user defined attributes to return.
      */
-    fun getUserDefinedAttributes(): Map<String, Any?>
+    fun getUserDefinedAttributes(limit: Int): Map<String, Any?>
 
     /**
      * Removes a user defined attribute from the database.
@@ -574,9 +576,9 @@ internal class DatabaseImpl(
         }
     }
 
-    override fun getUserDefinedAttributes(): Map<String, Any?> {
+    override fun getUserDefinedAttributes(limit: Int): Map<String, Any?> {
         val attributes = mutableMapOf<String, Any?>()
-        readableDatabase.rawQuery(Sql.getUserDefinedAttributes(), null).use {
+        readableDatabase.rawQuery(Sql.getUserDefinedAttributes(limit), null).use {
             while (it.moveToNext()) {
                 val keyIndex = it.getColumnIndex(UserDefinedAttributesTable.COL_KEY)
                 val valueIndex = it.getColumnIndex(UserDefinedAttributesTable.COL_VALUE)
