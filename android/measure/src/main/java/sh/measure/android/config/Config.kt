@@ -29,7 +29,7 @@ internal data class Config(
         "X-Api-Key",
     )
     override val sessionEndThresholdMs: Long = 60 * 1000 // 1 minute
-    override val maxUserDefinedAttributeKeyLength: Int = 64 // 64 chars
+    override val maxUserDefinedAttributeKeyLength: Int = 256 // 256 chars
     override val maxUserDefinedAttributeValueLength: Int = 256 // 256 chars
     override val eventTypeExportAllowList: List<String> = listOf(
         EventType.COLD_LAUNCH,

@@ -35,7 +35,7 @@ internal interface InternalConfig {
     val sessionEndThresholdMs: Long
 
     /**
-     * The maximum length of user defined attribute key. Defaults to 64 chars.
+     * The maximum length of user defined attribute key. Defaults to 256 chars.
      */
     val maxUserDefinedAttributeKeyLength: Int
 
