@@ -3,7 +3,6 @@ package sh.measure.android.events
 import sh.measure.android.SessionManager
 import sh.measure.android.attributes.Attribute
 import sh.measure.android.attributes.AttributeProcessor
-import sh.measure.android.attributes.UserDefinedAttribute
 import sh.measure.android.attributes.appendAttributes
 import sh.measure.android.config.ConfigProvider
 import sh.measure.android.exceptions.ExceptionData
@@ -96,7 +95,6 @@ internal class EventProcessorImpl(
     private val idProvider: IdProvider,
     private val sessionManager: SessionManager,
     private val attributeProcessors: List<AttributeProcessor>,
-    private val userDefinedAttribute: UserDefinedAttribute,
     private val eventTransformer: EventTransformer,
     private val exceptionExporter: ExceptionExporter,
     private val screenshotCollector: ScreenshotCollector,
@@ -208,7 +206,11 @@ internal class EventProcessorImpl(
                         }
                     }
                 } catch (e: RejectedExecutionException) {
-                    logger.log(LogLevel.Error, "Failed to submit event processing task to executor", e)
+                    logger.log(
+                        LogLevel.Error,
+                        "Failed to submit event processing task to executor",
+                        e
+                    )
                 }
             },
         )
@@ -234,7 +236,6 @@ internal class EventProcessorImpl(
             attachments = attachments,
             attributes = attributes,
             userTriggered = userTriggered,
-            userDefinedAttributes = userDefinedAttribute.getAll(),
         )
     }
 

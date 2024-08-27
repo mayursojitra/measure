@@ -1,6 +1,5 @@
 package sh.measure.android.storage
 
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import sh.measure.android.appexit.AppExit
@@ -43,7 +42,7 @@ internal fun <T> Event<T>.serializeAttributes(): String? {
  *
  */
 internal fun <T> Event<T>.serializeUserDefinedAttributes(): String? {
-    if (userDefinedAttributes.isEmpty()) {
+    if (userDefinedAttributes.isNullOrEmpty()) {
         return null
     }
     val result = Json.encodeToString(

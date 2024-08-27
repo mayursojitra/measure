@@ -123,16 +123,16 @@ internal class MeasureInternal(measureInitializer: MeasureInitializer) :
         userTriggeredEventCollector.trackHandledException(throwable)
     }
 
-    fun putAttribute(key: String, value: Number, store: Boolean) {
-        userDefinedAttribute.put(key, value, store)
+    fun putAttribute(key: String, value: Number) {
+        userDefinedAttribute.put(key, value)
     }
 
-    fun putAttribute(key: String, value: String, store: Boolean) {
-        userDefinedAttribute.put(key, value, store)
+    fun putAttribute(key: String, value: String) {
+        userDefinedAttribute.put(key, value)
     }
 
-    fun putAttribute(key: String, value: Boolean, store: Boolean) {
-        userDefinedAttribute.put(key, value, store)
+    fun putAttribute(key: String, value: Boolean) {
+        userDefinedAttribute.put(key, value)
     }
 
     fun removeAttribute(key: String) {
@@ -140,11 +140,6 @@ internal class MeasureInternal(measureInitializer: MeasureInitializer) :
     }
 
     fun clearAttributes() {
-        userDefinedAttribute.clear()
-    }
-
-    fun clear() {
-        userAttributeProcessor.clearUserId()
         userDefinedAttribute.clear()
     }
 }

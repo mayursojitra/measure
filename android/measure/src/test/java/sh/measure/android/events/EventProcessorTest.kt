@@ -16,7 +16,6 @@ import sh.measure.android.fakes.FakeConfigProvider
 import sh.measure.android.fakes.FakeEventStore
 import sh.measure.android.fakes.FakeIdProvider
 import sh.measure.android.fakes.FakeSessionManager
-import sh.measure.android.fakes.FakeUserDefinedAttribute
 import sh.measure.android.fakes.ImmediateExecutorService
 import sh.measure.android.fakes.NoopLogger
 import sh.measure.android.fakes.TestData
@@ -37,7 +36,6 @@ internal class EventProcessorTest {
     private val eventTransformer = object : EventTransformer {
         override fun <T> transform(event: Event<T>): Event<T> = event
     }
-    private val userDefinedAttribute = FakeUserDefinedAttribute()
 
     private val eventProcessor = EventProcessorImpl(
         logger = NoopLogger(),
@@ -50,7 +48,6 @@ internal class EventProcessorTest {
         screenshotCollector = screenshotCollector,
         configProvider = configProvider,
         eventTransformer = eventTransformer,
-        userDefinedAttribute = userDefinedAttribute,
     )
 
     @Before
@@ -161,7 +158,6 @@ internal class EventProcessorTest {
             screenshotCollector = screenshotCollector,
             configProvider = configProvider,
             eventTransformer = eventTransformer,
-            userDefinedAttribute = userDefinedAttribute,
         )
 
         // When
@@ -332,7 +328,6 @@ internal class EventProcessorTest {
             screenshotCollector = screenshotCollector,
             configProvider = configProvider,
             eventTransformer = eventTransformer,
-            userDefinedAttribute = userDefinedAttribute,
         )
 
         // When
@@ -377,7 +372,6 @@ internal class EventProcessorTest {
             screenshotCollector = screenshotCollector,
             configProvider = configProvider,
             eventTransformer = eventTransformer,
-            userDefinedAttribute = userDefinedAttribute,
         )
 
         // When
@@ -413,29 +407,6 @@ internal class EventProcessorTest {
         )
 
         assertEquals(1, eventStore.trackedEvents.size)
-        assertEquals(expectedEvent, eventStore.trackedEvents.first())
-    }
-
-    @Test
-    fun `given user defined attributes available, adds them to event`() {
-        userDefinedAttribute.put("key", "value", false)
-        val data = TestData.getNavigationData()
-        val timestamp = 1710746412L
-        val eventType = EventType.NAVIGATION
-        val expectedEvent = data.toEvent(
-            type = eventType,
-            timestamp = timestamp.iso8601Timestamp(),
-            id = idProvider.id,
-            sessionId = sessionManager.getSessionId(),
-            userDefinedAttributes = mapOf("key" to "value"),
-        ).apply { appendAttribute(Attribute.THREAD_NAME, Thread.currentThread().name) }
-
-        eventProcessor.track(
-            data = data,
-            timestamp = timestamp,
-            type = eventType,
-        )
-
         assertEquals(expectedEvent, eventStore.trackedEvents.first())
     }
 }
