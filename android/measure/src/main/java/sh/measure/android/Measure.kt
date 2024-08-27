@@ -194,7 +194,7 @@ object Measure {
             data = data,
             timestamp = timestamp,
             type = type,
-            attributes = attributes,
+            userDefinedAttributes = attributes,
             attachments = attachments,
         )
     }
@@ -210,7 +210,7 @@ object Measure {
             type = EventType.ANR,
             data = data,
             timestamp = timestamp,
-            attributes = attributes,
+            userDefinedAttributes = attributes,
             attachments = attachments,
         )
     }
