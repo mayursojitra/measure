@@ -4,8 +4,9 @@
 * [Quick reference](#quick-reference)
 * [Getting started](#getting-started)
 * [Custom events](#custom-events)
-  * [Handled exceptions](#handled-exceptions)
-  * [Navigation](#navigation)
+    * [Handled exceptions](#handled-exceptions)
+    * [Navigation](#navigation)
+* [Event Attributes](#event-attributes)
 * [Features](#features)
 * [Benchmarks](#benchmarks)
 
@@ -239,9 +240,66 @@ Measure.trackNavigationEvent(
 )
 ```
 
+# Event Attributes
+
+Each event collected by the Measure SDK can have a set of attributes associated with it. These attributes provide
+additional context to the event. Measure SDK automatically collects some attributes like `app_version`, `os_version`,
+etc. You can find all the attributes automatically collected by the SDK [here](../api/sdk/README.md#attributes).
+
+Attributes are key-value pairs where the key is a `String` and the value can be of
+type `String`, `Int`, `Long`, `Float`, `Boolean`. The key and value are limited by the following constraints:
+
+* The key can be of maximum length 256 characters.
+* The values can be of a maximum length of 256 characters.
+* The total number of attributes which will be added to an event is limited to 100. If the limit is exceeded, the
+  attributes will be truncated.
+
+More attributes can be added, removed, and cleared using the following methods.
+
+## Add an attribute
+
+Add an attribute by calling one of the overloaded `putAttribute` method. Optionally, attributes can be stored across app
+launch. By default, attributes are not stored.
+
+Calling `putAttribute` on an existing key will update the value of the attribute.
+
+```kotlin 
+Measure.putAttribute(key = "is_premium_user", value = true, store = true)
+Measure.putAttribute(key = "total_transactions", value = 100)
+```
+
+To add multiple attributes at once, use the `putAttributes` method.
+
+```kotlin
+Measure.putAttributes(
+  "is_premium_user" to true,
+  "total_transactions" to 100
+)
+```
+
+Note that the type of the value must be one of the supported types: `String`, `Int`, `Long`, `Float`, `Boolean`. If the
+value is not of the supported type, the attribute will not be added.
+
+## Remove an attribute
+
+An attribute already added can be removed by calling the `removeAttribute` method. This will also clear the stored
+attribute if it was stored. It's a no-op if the attribute does not exist.
+
+```kotlin
+Measure.removeAttribute("is_premium_user")
+```
+
+## Clear all attributes
+
+To clear all the attributes, call the `clearAttributes` method. This will also clear all stored attributes.
+
+```kotlin
+Measure.clearAttributes()
+```
+
 # Features
 
-All the features supported by the Measure SDK are listed below. 
+All the features supported by the Measure SDK are listed below.
 
 * [Crash tracking](features/feature_crash_tracking.md)
 * [ANR tracking](features/feature_anr_tracking.md)
