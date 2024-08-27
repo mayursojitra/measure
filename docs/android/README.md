@@ -256,12 +256,18 @@ type `String`, `Int`, `Long`, `Float`, `Boolean`. The key and value are limited 
 
 More attributes can be added, removed, and cleared using the following methods.
 
+> [!IMPORTANT]
+> Attributes added using this method are added to every subsequent event, until they are removed. Make sure
+> attributes are added only when they are relevant for all events. For tracking attributes for a specific event,
+> use the `Measure.trackEvent` method (see [Custom events](#custom-events)).
+
 ## Add an attribute
 
 Add an attribute by calling one of the overloaded `putAttribute` method. Optionally, attributes can be stored across app
-launch. By default, attributes are not stored.
+launch. By default, attributes are not stored.  Calling `putAttribute` on an existing key will update the value of the 
+attribute.
 
-Calling `putAttribute` on an existing key will update the value of the attribute.
+Example:
 
 ```kotlin 
 Measure.putAttribute(key = "is_premium_user", value = true, store = true)
