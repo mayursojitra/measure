@@ -9,10 +9,15 @@ public final class sh/measure/android/BuildConfig {
 public final class sh/measure/android/Measure {
 	public static final field $stable I
 	public static final field INSTANCE Lsh/measure/android/Measure;
+	public static final fun clearAttributes ()V
 	public static final fun clearUserId ()V
 	public static final fun init (Landroid/content/Context;)V
 	public static final fun init (Landroid/content/Context;Lsh/measure/android/config/MeasureConfig;)V
 	public static synthetic fun init$default (Landroid/content/Context;Lsh/measure/android/config/MeasureConfig;ILjava/lang/Object;)V
+	public static final fun putAttribute (Ljava/lang/String;Ljava/lang/Number;Z)V
+	public static final fun putAttribute (Ljava/lang/String;Ljava/lang/String;Z)V
+	public static final fun putAttribute (Ljava/lang/String;ZZ)V
+	public static final fun removeAttribute (Ljava/lang/String;)V
 	public static final fun setUserId (Ljava/lang/String;)V
 	public static final fun trackHandledException (Ljava/lang/Throwable;)V
 	public static final fun trackNavigation (Ljava/lang/String;)V
