@@ -634,7 +634,7 @@ class MeasureEventsTest {
                 foreground = true,
             ),
             timestamp = 987654321L,
-            attributes = mutableMapOf(),
+            userDefinedAttributes = mutableMapOf(),
             attachments = mutableListOf(),
         )
     }
@@ -648,7 +648,7 @@ class MeasureEventsTest {
                 foreground = true,
             ),
             timestamp = 987654321L,
-            attributes = mutableMapOf(),
+            userDefinedAttributes = mutableMapOf(),
             attachments = mutableListOf(),
         )
     }
