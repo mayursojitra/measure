@@ -20,14 +20,34 @@ import kotlinx.serialization.json.doubleOrNull
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.intOrNull
 
+/**
+ * Represents a set of attributes that describe an event.
+ *
+ * Attributes can have values of type strings, booleans, integers, or doubles. To create
+ * attributes, use the [buildAttributes] function.
+ *
+ * ```kotlin
+ * val attributes = buildAttributes {
+ *   "key1" to "value1"
+ *   "key2" to 42
+ *   "key3" to 3.14
+ *   "key4" to true
+ * }
+ */
 typealias Attributes = Map<String, AttributeValue>
 
+/**
+ * Represents a value of an attribute. It can be a string, boolean, integer, or double.
+ * To create attributes, use the [buildAttributes] function.
+ */
 sealed interface AttributeValue {
     val value: Any
 
     companion object
 }
 
+// This is required because we don't want to annotate AttributeValue with @Serializable as it's a
+// public class. Doing so will leak the serialization implementation details to the public API.
 internal fun AttributeValue.Companion.serializer(): KSerializer<@Contextual AttributeValue> {
     return AttributeValueSerializer
 }
@@ -44,18 +64,25 @@ value class IntAttr(override val value: Int) : AttributeValue
 @JvmInline
 value class DoubleAttr(override val value: Double) : AttributeValue
 
+/**
+ * Builder for creating attributes. Use the [buildAttributes] function to create a set of
+ * attributes.
+ */
 class EventAttributesBuilder {
     private val attributes = mutableMapOf<String, AttributeValue>()
 
     infix fun String.to(value: String) {
         attributes[this] = StringAttr(value)
     }
+
     infix fun String.to(value: Boolean) {
         attributes[this] = BooleanAttr(value)
     }
+
     infix fun String.to(value: Int) {
         attributes[this] = IntAttr(value)
     }
+
     infix fun String.to(value: Double) {
         attributes[this] = DoubleAttr(value)
     }
@@ -63,6 +90,20 @@ class EventAttributesBuilder {
     fun build(): Attributes = attributes.toMap()
 }
 
+/**
+ * Creates a set of attributes. It provides a type-safe way to create attributes with the supported
+ * value types: strings, booleans, integers, and doubles.
+ *
+ * Example:
+ *
+ * ```kotlin
+ * val attributes: Attributes = buildAttributes {
+ *  "key1" to "value1"
+ *  "key2" to 42
+ *  "key3" to 3.14
+ *  "key4" to true
+ * }
+ */
 fun buildAttributes(block: EventAttributesBuilder.() -> Unit): Attributes =
     EventAttributesBuilder().apply(block).build()
 
