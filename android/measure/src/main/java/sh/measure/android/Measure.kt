@@ -45,16 +45,22 @@ object Measure {
     @JvmOverloads
     fun init(context: Context, measureConfig: MeasureConfig = MeasureConfig()) {
         if (isInitialized.compareAndSet(false, true)) {
-            InternalTrace.trace(
-                label = { "msr-init" },
-                block = {
-                    val application = context.applicationContext as Application
-                    val initializer =
-                        MeasureInitializerImpl(application, inputConfig = measureConfig)
-                    measure = MeasureInternal(initializer)
-                    measure.init()
-                },
-            )
+            kotlin.runCatching {
+                InternalTrace.trace(
+                    label = { "msr-init" },
+                    block = {
+                        val application = context.applicationContext as Application
+                        val initializer =
+                            MeasureInitializerImpl(application, inputConfig = measureConfig)
+                        measure = MeasureInternal(initializer)
+                        measure.init()
+                    },
+                )
+            }.onSuccess {
+                measure.logger.log(LogLevel.Info, "Measure SDK initialized successfully")
+            }.onFailure {
+                measure.logger.log(LogLevel.Error, "Failed to initialize Measure SDK", it)
+            }
         }
     }
 
